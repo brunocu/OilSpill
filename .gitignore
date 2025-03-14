@@ -1,0 +1,54 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# Type checking and testing caches
+.mypy_cache/
+.cache
+.ipynb_checkpoints/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Data files
+# Ignore all raw data files by default; 
+# then, allow the main dataset archive to be tracked.
+data/raw/*
+data/test/*
+data/train/*
+!data/raw/files.txt
+
+# Outputs: Generated models, logs, predictions, etc.
+output/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
