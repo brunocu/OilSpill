@@ -1,0 +1,12 @@
+name: oilspill
+channels:
+  - conda-forge
+  - paddle
+  - nvidia
+dependencies:
+  - python=3.10
+  - numpy<2
+  - paddlepaddle-gpu
+  - paddlepaddle-cuda=12.3
+  - rasterio
+  - matplotlib
