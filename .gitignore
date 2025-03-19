@@ -47,6 +47,7 @@ data/train/*
 
 # Outputs: Generated models, logs, predictions, etc.
 output/
+mlruns/
 
 # Logs and temporary files
 *.log

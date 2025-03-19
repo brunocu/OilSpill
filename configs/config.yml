@@ -1,5 +1,5 @@
-batch_size: 6
-iters: 8000
+batch_size: 8
+iters: 10000
 
 model:
   type: PPLiteSeg
@@ -11,8 +11,8 @@ model:
 
 train_dataset:
   type: Dataset
-  dataset_root: dataset
-  train_path: dataset/train.txt
+  dataset_root: data/train
+  train_path: data/train/train.txt
   num_classes: 2
   img_channels: 2
   mode: train
@@ -27,8 +27,8 @@ train_dataset:
 
 val_dataset:
   type: Dataset
-  dataset_root: dataset
-  val_path: dataset/val.txt
+  dataset_root: data/train
+  val_path: data/train/val.txt
   num_classes: 2
   img_channels: 2
   mode: val

@@ -1,0 +1,59 @@
+batch_size: 6
+iters: 10000
+
+model:
+  type: PPLiteSeg
+  backbone:
+    type: STDC2
+    pretrained: https://bj.bcebos.com/paddleseg/dygraph/PP_STDCNet2.tar.gz
+    in_channels: 2
+  num_classes: 2
+
+train_dataset:
+  type: Dataset
+  dataset_root: data/train
+  train_path: data/train/train.txt
+  num_classes: 2
+  img_channels: 2
+  mode: train
+  transforms:
+    - type: Padding
+      target_size: [2248, 2248]
+      im_padding_value: 0
+      label_padding_value: 0
+    - type: Resize
+      target_size: [1024, 1024]
+    - type: Normalize
+
+val_dataset:
+  type: Dataset
+  dataset_root: data/train
+  val_path: data/train/val.txt
+  num_classes: 2
+  img_channels: 2
+  mode: val
+  transforms:
+    - type: Padding
+      target_size: [2248, 2248]
+      im_padding_value: 0
+      label_padding_value: 0
+    - type: Resize
+      target_size: [1024, 1024]
+    - type: Normalize
+
+optimizer:
+  type: Adam
+  weight_decay: 4.0e-5
+
+lr_scheduler:
+  type: PolynomialDecay
+  learning_rate: 0.01
+  end_lr: 0
+  power: 0.9
+  warmup_iters: 1500
+  warmup_start_lr: 1.0e-6
+
+loss:
+  types:
+    - type: DiceLoss
+  coef: [1.0, 1.0, 1.0]

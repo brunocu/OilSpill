@@ -10,3 +10,5 @@ dependencies:
   - paddlepaddle-cuda=12.3
   - rasterio
   - matplotlib
+  - mlflow
+  - optuna

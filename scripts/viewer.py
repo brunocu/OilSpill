@@ -75,6 +75,9 @@ class SARViewer:
         self.switch_button = tk.Button(control_frame, text="Switch Folder", command=self.select_folder)
         self.switch_button.pack(side=tk.LEFT, padx=5)
 
+        self.coord_label = tk.Label(control_frame, text="Pixel: (x, y) Value: ???")
+        self.coord_label.pack(side=tk.LEFT, padx=5)
+
         logging.info("Initializing SARViewer and prompting for initial folder.")
         self.select_folder()
 
@@ -274,12 +277,45 @@ class SARViewer:
             self.ax_mask.set_title("Mask")
             self.ax_mask.axis('off')
 
+        self.vv_data = vv
+        self.vh_data = vh
+        if self.show_predictions:
+            self.gt_mask_data = gt_mask
+            self.pred_mask_data = pred_mask
+        else:
+            self.mask_data = mask_data
+
+        self.ax_data_map = {}
+        self.ax_data_map[self.axes_top[0]] = vv
+        self.ax_data_map[self.axes_top[1]] = vh
+        if self.show_predictions:
+            self.ax_data_map[self.axes_bottom[0]] = gt_mask
+            self.ax_data_map[self.axes_bottom[1]] = pred_mask
+            # Composite is 3D, so omit or handle separately if you want a single value.
+        else:
+            self.ax_data_map[self.ax_mask] = mask_data
+
+        self.canvas.mpl_connect("motion_notify_event", self.on_mouse_move)
+
         self.fig.tight_layout()
         self.canvas.draw()
         logging.info("Finished drawing the selected image.")
 
         # Revert cursor back to default
         self.master.config(cursor="")
+
+    def on_mouse_move(self, event):
+        ax = event.inaxes
+        if ax and ax in self.ax_data_map:
+            data = self.ax_data_map[ax]
+            x, y = int(event.xdata), int(event.ydata)
+            if 0 <= x < data.shape[1] and 0 <= y < data.shape[0]:
+                val = data[y, x]
+                self.coord_label.config(text=f"Pixel: ({x}, {y}) Value: {val:.2f}")
+            else:
+                self.coord_label.config(text="Pixel: (x, y) Value: ???")
+        else:
+            self.coord_label.config(text="Pixel: (x, y) Value: ???")
 
     def on_closing(self):
         # Close the matplotlib figure
