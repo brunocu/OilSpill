@@ -1,5 +1,5 @@
 python PaddleSeg/tools/predict.py \
-       --config configs/config.yml \
-       --model_path checkpoints/best_model/model.pdparams \
+       --config configs/config_667183c.yml \
+       --model_path checkpoints/model_667183c/model.pdparams \
        --image_path data/test/images \
        --save_dir output/predict

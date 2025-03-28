@@ -1,13 +1,19 @@
-batch_size: 8
+batch_size: 1
 iters: 10000
 
 model:
-  type: PPLiteSeg
+  type: DeepLabV3P
   backbone:
-    type: STDC2
+    type: ResNet50_vd
+    output_stride: 8
+    multi_grid: [1, 2, 4]
     in_channels: 2
   num_classes: 2
-  pretrained: https://paddleseg.bj.bcebos.com/dygraph/cityscapes/pp_liteseg_stdc2_cityscapes_1024x512_scale1.0_160k/model.pdparams
+  backbone_indices: [0, 3]
+  aspp_ratios: [1, 12, 24, 36]
+  aspp_out_channels: 256
+  align_corners: False
+  pretrained: https://bj.bcebos.com/paddleseg/dygraph/cityscapes/deeplabv3p_resnet50_os8_cityscapes_1024x512_80k/model.pdparams
 
 train_dataset:
   type: Dataset
@@ -40,13 +46,11 @@ optimizer:
 lr_scheduler:
   type: PolynomialDecay
   learning_rate: 0.01
-  end_lr: 1.0e-6
+  end_lr: 0.0
   power: 0.9
-  warmup_iters: 1000
-  warmup_start_lr: 1.0e-6
 
 loss:
   types:
     - type: BCELoss
       pos_weight: dynamic
-  coef: [1, 1, 1]
+  coef: [1]

@@ -3,4 +3,4 @@ python PaddleSeg/tools/train.py \
        --do_eval \
        --use_vdl \
        --save_interval 100 \
-       --save_dir output
+       --save_dir output/train

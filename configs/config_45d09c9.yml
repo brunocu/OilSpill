@@ -1,13 +1,14 @@
-batch_size: 8
+batch_size: 1
 iters: 10000
 
 model:
-  type: PPLiteSeg
+  type: OCRNet
   backbone:
-    type: STDC2
+    type: HRNet_W18
     in_channels: 2
   num_classes: 2
-  pretrained: https://paddleseg.bj.bcebos.com/dygraph/cityscapes/pp_liteseg_stdc2_cityscapes_1024x512_scale1.0_160k/model.pdparams
+  backbone_indices: [0]
+  pretrained: https://bj.bcebos.com/paddleseg/dygraph/cityscapes/ocrnet_hrnetw18_cityscapes_1024x512_160k/model.pdparams
 
 train_dataset:
   type: Dataset
@@ -49,4 +50,4 @@ loss:
   types:
     - type: BCELoss
       pos_weight: dynamic
-  coef: [1, 1, 1]
+  coef: [1, 1]

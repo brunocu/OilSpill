@@ -24,7 +24,7 @@ paddle.seed(SEED)
 np.random.seed(SEED)
 random.seed(SEED)
 
-# Added global hyperparameters
+# global hyperparameters
 BATCH_SIZE = 6
 MAX_ITERATIONS = 5000
 EVAL_INTERVAL = 100
